@@ -26,3 +26,65 @@ model User {
   @@map("users") // Mapear como vai ser o nome da tabela no banco de dados
 }
 
+// 1 - N
+model Category {
+  id String @id @default(uuid())
+  name String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("categories")
+
+  products Product[] // Referencia ao product (1 categoria pode ter varios produtos)
+}
+
+model Product {
+  id String @id @default(uuid())
+  name String
+  price String
+  description String
+  banner String
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  category Category @relation(fields: [category_id], references: [id]) // Nome do campo e referencia ao campo da tabela Category
+
+  @@map("products")
+
+  category_id String
+
+  items Item[] // Um produto pode estar dentro de varios pedidos
+}
+
+model Order {
+  id String @id @default(uuid())
+  table Int
+  status Boolean @default(false) // Comeca o status sempre false
+  draft Boolean @default(true) // Quando criar um produto, sempre será como rascunho até o garcom modificar 
+  name String? // ? opcional
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("orders")
+  
+  items Item[]
+}
+
+model Item {
+  id String @id @default(uuid())
+  amount Int // quantidade
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("items")
+
+  order Order @relation(fields: [order_id], references: [id])
+  product Product @relation(fields: [product_id], references: [id])
+
+  order_id String
+  product_id String
+
+}
+
+
+
