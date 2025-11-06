@@ -20,6 +20,8 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
         // Valid the token
         const { sub } = verify(token, process.env.JWT_SECRET) as Payload;
 
+        req.user_id = sub;
+
     } catch (error) {
         return res.status(401).end();
     }
