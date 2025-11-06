@@ -1,6 +1,6 @@
 // Repassar os dados da requisicao
 
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { CreateUserService } from "../../services/user/create-user.service";
 
 class CreateUserController {
