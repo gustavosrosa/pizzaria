@@ -14,6 +14,8 @@ const router = Router();
 /** Multer */
 const upload = multer(uploadConfig.upload("./tmp"));
 
+const PRODUCT = 'product';
+
 /** Routes user */
 router.post('/users', new CreateUserController().handle);
 router.post('/session', new AuthUserController().handle);
@@ -23,7 +25,7 @@ router.get('/me', isAuthenticated, new DetailUserController().handle); // Middle
 router.get("/categories", isAuthenticated, new DetailCategoryController().handle);
 
 /** Routes products  */
-router.post("/product", isAuthenticated, upload.single('file'), new CreateProductController().handle);
-router.get("/category/product", isAuthenticated, new ListByCategoryController().handle);
+router.post(`/${PRODUCT}`, isAuthenticated, upload.single('file'), new CreateProductController().handle);
+router.get(`/category/${PRODUCT}`, isAuthenticated, new ListByCategoryController().handle);
 
 export { router };
