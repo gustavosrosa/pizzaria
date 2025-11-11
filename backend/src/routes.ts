@@ -10,6 +10,8 @@ import uploadConfig from './config/multer'
 import { ListByCategoryController } from './controllers/product/list-by-category.controller';
 import { CreateOrderController } from './controllers/order/create-order.controller';
 import { RemoveOrderController } from './controllers/order/remove-order.controller';
+import { AddItemController } from './controllers/order/add-item.controller';
+import { CreateCategoryController } from './controllers/category/create-category.controller';
 
 const router = Router();
 
@@ -17,6 +19,8 @@ const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"));
 
 const PRODUCT = 'product';
+const ORDER = 'order';
+const CATEGORY = 'category';
 
 /** Routes user */
 router.post('/users', new CreateUserController().handle);
@@ -24,14 +28,16 @@ router.post('/session', new AuthUserController().handle);
 router.get('/me', isAuthenticated, new DetailUserController().handle); // Middleware - Before call the controller
 
 /** Routes categories */
-router.get("/categories", isAuthenticated, new DetailCategoryController().handle);
+router.get(`/${CATEGORY}`, isAuthenticated, new DetailCategoryController().handle);
+router.post(`/${CATEGORY}`, isAuthenticated, new CreateCategoryController().handle);
 
-/** Routes products  */
+/** Routes products */
 router.post(`/${PRODUCT}`, isAuthenticated, upload.single('file'), new CreateProductController().handle);
-router.get(`/category/${PRODUCT}`, isAuthenticated, new ListByCategoryController().handle);
+router.get(`/${CATEGORY}/${PRODUCT}`, isAuthenticated, new ListByCategoryController().handle);
 
 /** Routes orders */
-router.post('/order', isAuthenticated, new CreateOrderController().handle);
-router.delete('/order', isAuthenticated, new RemoveOrderController().handle);
+router.post(`/${ORDER}`, isAuthenticated, new CreateOrderController().handle);
+router.delete(`/${ORDER}`, isAuthenticated, new RemoveOrderController().handle);
+router.post(`/${ORDER}/add`, isAuthenticated, new AddItemController().handle);
 
 export { router };
