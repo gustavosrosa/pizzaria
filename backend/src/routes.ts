@@ -9,6 +9,7 @@ import { CreateProductController } from './controllers/product/create-product.co
 import uploadConfig from './config/multer'
 import { ListByCategoryController } from './controllers/product/list-by-category.controller';
 import { CreateOrderController } from './controllers/order/create-order.controller';
+import { RemoveOrderController } from './controllers/order/remove-order.controller';
 
 const router = Router();
 
@@ -31,5 +32,6 @@ router.get(`/category/${PRODUCT}`, isAuthenticated, new ListByCategoryController
 
 /** Routes orders */
 router.post('/order', isAuthenticated, new CreateOrderController().handle);
+router.delete('/order', isAuthenticated, new RemoveOrderController().handle);
 
 export { router };
