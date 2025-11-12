@@ -23,6 +23,7 @@ import { createUserValidator } from './models/user/create-user.validator.model';
 import { authUserValidator } from './models/user/auth-user.validator.model';
 import { createOrderValidator } from './models/order/create-order.validator.model';
 import { addItemValidator } from './models/order/add-item.validator.model';
+import { sendAndFinishOrderValidator } from './models/order/send-and-finish-order.validator.model';
 
 const router = Router();
 
@@ -51,9 +52,9 @@ router.post(`/${ORDER}`, isAuthenticated, createOrderValidator, new CreateOrderC
 router.delete(`/${ORDER}`, isAuthenticated, new RemoveOrderController().handle);
 router.post(`/${ORDER}/add`, isAuthenticated, addItemValidator, new AddItemController().handle);
 router.delete(`/${ORDER}/remove`, isAuthenticated, new RemoveItemController().handle);
-router.put(`/${ORDER}/send`, isAuthenticated, new SendOrderController().handle);
+router.put(`/${ORDER}/send`, isAuthenticated, sendAndFinishOrderValidator, new SendOrderController().handle);
 router.get('/orders', isAuthenticated, new ListOrdersController().handle);
 router.get(`/${ORDER}/detail`, isAuthenticated, new DetailOrderController().handle);
-router.put(`/${ORDER}/finish`, isAuthenticated, new FinishOrderController().handle);
+router.put(`/${ORDER}/finish`, isAuthenticated, sendAndFinishOrderValidator, new FinishOrderController().handle);
 
 export { router };
