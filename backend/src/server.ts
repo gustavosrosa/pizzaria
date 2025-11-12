@@ -5,7 +5,7 @@ import cors from 'cors';
 import path from 'path';
 
 const app = express();
-const PORT = 3000;
+const PORT = 3333;
 
 app.use(express.json());
 app.use(cors())
