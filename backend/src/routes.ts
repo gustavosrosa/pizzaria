@@ -21,6 +21,7 @@ import { createCategoryValidator } from './models/category/create-category.valid
 import { createProductValidator } from './models/product/create-product.validator.model';
 import { createUserValidator } from './models/user/create-user.validator.model';
 import { authUserValidator } from './models/user/auth-user.validator.model';
+import { createOrderValidator } from './models/order/create-order.validation.model';
 
 const router = Router();
 
@@ -45,7 +46,7 @@ router.post(`/${PRODUCT}`, isAuthenticated, upload.single('file'), createProduct
 router.get(`/${CATEGORY}/${PRODUCT}`, isAuthenticated, new ListByCategoryController().handle);
 
 /** Routes orders */
-router.post(`/${ORDER}`, isAuthenticated, new CreateOrderController().handle);
+router.post(`/${ORDER}`, isAuthenticated, createOrderValidator, new CreateOrderController().handle);
 router.delete(`/${ORDER}`, isAuthenticated, new RemoveOrderController().handle);
 router.post(`/${ORDER}/add`, isAuthenticated, new AddItemController().handle);
 router.delete(`/${ORDER}/remove`, isAuthenticated, new RemoveItemController().handle);
