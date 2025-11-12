@@ -19,6 +19,7 @@ import { DetailOrderController } from './controllers/order/detail-order.controll
 import { FinishOrderController } from './controllers/order/finish-order.controller';
 import { createCategoryValidator } from './models/category/create-category.validator.model';
 import { createProductValidator } from './models/product/create-product.validator.model';
+import { createUserValidator } from './models/user/create-user.validator.model';
 
 const router = Router();
 
@@ -30,7 +31,7 @@ const ORDER = 'order';
 const CATEGORY = 'category';
 
 /** Routes user */
-router.post('/users', new CreateUserController().handle);
+router.post('/users', createUserValidator, new CreateUserController().handle);
 router.post('/session', new AuthUserController().handle);
 router.get('/me', isAuthenticated, new DetailUserController().handle); // Middleware - Before call the controller
 
