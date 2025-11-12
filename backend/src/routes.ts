@@ -18,6 +18,7 @@ import { ListOrdersController } from './controllers/order/list-orders.controller
 import { DetailOrderController } from './controllers/order/detail-order.controller';
 import { FinishOrderController } from './controllers/order/finish-order.controller';
 import { createCategoryValidator } from './models/category/create-category.validator.model';
+import { createProductValidator } from './models/product/create-product.validator.model';
 
 const router = Router();
 
@@ -38,7 +39,7 @@ router.get(`/${CATEGORY}`, isAuthenticated, new DetailCategoryController().handl
 router.post(`/${CATEGORY}`, isAuthenticated, createCategoryValidator, new CreateCategoryController().handle);
 
 /** Routes products */
-router.post(`/${PRODUCT}`, isAuthenticated, upload.single('file'), new CreateProductController().handle);
+router.post(`/${PRODUCT}`, isAuthenticated, upload.single('file'), createProductValidator, new CreateProductController().handle);
 router.get(`/${CATEGORY}/${PRODUCT}`, isAuthenticated, new ListByCategoryController().handle);
 
 /** Routes orders */

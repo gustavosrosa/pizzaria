@@ -18,8 +18,18 @@ class CreateProductService {
             }
         });
 
+        const categoryExists = await prismaClient.category.findFirst({
+            where: {
+                id: category_id,
+            }
+        })
+
         if (productExists) {
             throw new Error("Product already exist on database!")
+        }
+
+        if (!categoryExists) {
+            throw new Error("Category dont exist on database!")
         }
 
         const product = await prismaClient.product.create({
